@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>pentaho</groupId>
+    <artifactId>pentaho-big-data-impl</artifactId>
+    <version>8.0.0.0-28</version>
+  </parent>
+  <artifactId>pentaho-big-data-impl-shim</artifactId>
+  <version>8.0.0.0-28</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>common</module>
+    <module>initializer</module>
+    <module>hdfs</module>
+    <module>hive</module>
+    <module>mapreduce</module>
+    <module>pig</module>
+    <module>oozie</module>
+    <module>hbase</module>
+    <module>sqoop</module>
+    <module>jaas</module>
+    <module>format</module>
+    <module>shimTests</module>
+  </modules>
+</project>

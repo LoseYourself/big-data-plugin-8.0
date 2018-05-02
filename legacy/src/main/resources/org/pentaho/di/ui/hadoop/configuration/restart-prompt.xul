@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<window id="hadoopConfigurationSelectionWindow" title="${HadoopConfigurationSelectionDialog.Shell.Title}"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        width="300" height="100" proxyoutercontext="true" appicon="ui/images/spoon.ico">
+
+  <dialog width="300" height="100" id="hadoopConfigurationRestartDialog"
+          title="${HadoopConfigurationRestartXulDialog.Shell.Title}"
+          appicon="ui/images/spoon.ico"
+          buttons=""
+          resizable="false">
+    <vbox flex="1" padding="15">
+      <hbox flex="1" padding="0" spacing="10">
+        <image src='ui/images/warning:32#32.svg' width='32' height='32'/>
+        <label id="hadoopConfigurationSelectionDialogLabel" value="${HadoopConfigurationRestartXulDialog.Text}"
+               multiline="true" width="300"/>
+      </hbox>
+      <spacer height="15"/>
+      <hbox>
+        <spacer flex="1"/>
+        <button label="${Dialog.Close}" width="75" onclick="hadoopConfigurationRestartXulDialog.close()"/>
+      </hbox>
+    </vbox>
+  </dialog>
+</window>
