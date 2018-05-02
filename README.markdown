@@ -1,6 +1,15 @@
 Pentaho Big Data Plugin
 =======================
 
+Pentaho Kettle大数据插件, 用于插件BUG修复.
+
+Baseline
+--------
+基线版本 : big-data-plugin-8.0.0.0-R.
+
+Pentaho Big Data Plugin
+=======================
+
 The Pentaho Big Data Plugin Project provides support for an ever-expanding Big Data community within the Pentaho ecosystem. It is a plugin for the Pentaho Kettle engine which can be used within Pentaho Data Integration (Kettle), Pentaho Reporting, and the Pentaho BI Platform.
 
 Building
