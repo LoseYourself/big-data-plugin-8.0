@@ -1033,6 +1033,10 @@
           <artifactId>xbean</artifactId>
           <groupId>org.apache.xbean</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>stax-ex</artifactId>
+          <groupId>org.jvnet.staxex</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
