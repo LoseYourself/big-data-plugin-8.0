@@ -95,7 +95,7 @@ public class HadoopFileInputMeta extends TextFileInputMeta {
   protected String loadSourceRep( Repository rep, ObjectId id_step, int i, IMetaStore metaStore )
     throws KettleException {
     String source_filefolder = rep.getStepAttributeString( id_step, i, "file_name" );
-    String ncName = rep.getJobEntryAttributeString( id_step, i, SOURCE_CONFIGURATION_NAME );
+    String ncName = rep.getStepAttributeString( id_step, i, SOURCE_CONFIGURATION_NAME );
     return loadUrl( source_filefolder, ncName, metaStore, namedClusterURLMapping );
   }
 
