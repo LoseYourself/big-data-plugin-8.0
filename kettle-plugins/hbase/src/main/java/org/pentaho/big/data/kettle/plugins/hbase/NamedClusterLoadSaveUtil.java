@@ -54,7 +54,7 @@ public class NamedClusterLoadSaveUtil {
       if ( entrynode != null ) {
         clusterName = XMLHandler.getTagValue( entrynode, CLUSTER_NAME ); //$NON-NLS-1$
       } else if ( rep != null ) {
-        clusterName = rep.getJobEntryAttributeString( id_jobentry, CLUSTER_NAME ); //$NON-NLS-1$ //$NON-NLS-2$
+        clusterName = rep.getStepAttributeString( id_jobentry, CLUSTER_NAME ); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
       if ( metaStore != null && !StringUtils.isEmpty( clusterName ) && namedClusterService
