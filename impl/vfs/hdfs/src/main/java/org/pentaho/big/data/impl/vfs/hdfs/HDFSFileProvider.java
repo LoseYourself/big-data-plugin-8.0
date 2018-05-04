@@ -113,6 +113,9 @@ public class HDFSFileProvider extends AbstractOriginatingFileProvider {
     } else {
       namedCluster.setHdfsPort( "" );
     }
+
+    namedCluster.setHdfsUsername(genericFileName.getUserName());
+
     namedCluster.setMapr( MAPRFS.equals( name.getScheme() ) );
     try {
       return new HDFSFileSystem( name, fileSystemOptions, hadoopFileSystemLocator.getHadoopFilesystem( namedCluster,

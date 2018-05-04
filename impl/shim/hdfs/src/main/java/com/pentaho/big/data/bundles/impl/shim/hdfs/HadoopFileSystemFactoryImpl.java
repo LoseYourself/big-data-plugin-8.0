@@ -73,7 +73,7 @@ public class HadoopFileSystemFactoryImpl implements HadoopFileSystemFactory {
       @Override
       public FileSystem getFileSystem() {
         try {
-          return (FileSystem) hadoopShim.getFileSystem( uri, configuration, null ).getDelegate();
+          return (FileSystem) hadoopShim.getFileSystem( uri, configuration, namedCluster.getHdfsUsername() ).getDelegate();
         } catch ( IOException e ) {
           LOGGER.debug( "Error looking up/creating the file system ", e );
           return null;
