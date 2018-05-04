@@ -113,6 +113,9 @@ public class HBaseInputDialog extends BaseStepDialog implements StepDialogInterf
 
   NamedClusterWidgetImpl namedClusterWidget;
 
+  // Username
+  private TextVar m_usernameText;
+
   // Core config line
   private Button m_coreConfigBut;
   private TextVar m_coreConfigText;
@@ -275,6 +278,33 @@ public class HBaseInputDialog extends BaseStepDialog implements StepDialogInterf
     fd.left = new FormAttachment( middle, 0 );
     namedClusterWidget.setLayoutData( fd );
 
+    // username line
+    Label usernameLab = new Label( wConfigComp, SWT.RIGHT );
+    usernameLab.setText( BaseMessages.getString( HBaseInputMeta.PKG, "HBaseInputDialog.Username.Label" ) );
+    usernameLab.setToolTipText(
+        BaseMessages.getString( HBaseInputMeta.PKG, "HBaseInputDialog.Username.TipText" ) );
+    props.setLook( usernameLab );
+    fd = new FormData();
+    fd.left = new FormAttachment( 0, 0 );
+    fd.top = new FormAttachment( namedClusterWidget, margin );
+    fd.right = new FormAttachment( middle, -margin );
+    usernameLab.setLayoutData( fd );
+
+    m_usernameText = new TextVar( transMeta, wConfigComp, SWT.SINGLE | SWT.LEFT | SWT.BORDER );
+    props.setLook( m_usernameText );
+    m_usernameText.addModifyListener( lsMod );
+
+    m_usernameText.addModifyListener( new ModifyListener() {
+      public void modifyText( ModifyEvent e ) {
+        m_usernameText.setToolTipText( transMeta.environmentSubstitute( m_usernameText.getText() ) );
+      }
+    } );
+    fd = new FormData();
+    fd.left = new FormAttachment( middle, 0 );
+    fd.top = new FormAttachment( namedClusterWidget, margin );
+    fd.right = new FormAttachment( 100, 0 );
+    m_usernameText.setLayoutData( fd );
+
     // core config line
     Label coreConfigLab = new Label( wConfigComp, SWT.RIGHT );
     coreConfigLab.setText( Messages.getString( "HBaseInputDialog.CoreConfig.Label" ) );
@@ -282,7 +312,7 @@ public class HBaseInputDialog extends BaseStepDialog implements StepDialogInterf
     props.setLook( coreConfigLab );
     fd = new FormData();
     fd.left = new FormAttachment( 0, 0 );
-    fd.top = new FormAttachment( namedClusterWidget, margin );
+    fd.top = new FormAttachment( m_usernameText, margin );
     fd.right = new FormAttachment( middle, -margin );
     coreConfigLab.setLayoutData( fd );
 
@@ -291,7 +321,7 @@ public class HBaseInputDialog extends BaseStepDialog implements StepDialogInterf
     m_coreConfigBut.setText( Messages.getString( "System.Button.Browse" ) );
     fd = new FormData();
     fd.right = new FormAttachment( 100, 0 );
-    fd.top = new FormAttachment( namedClusterWidget, 0 );
+    fd.top = new FormAttachment( m_usernameText, 0 );
     m_coreConfigBut.setLayoutData( fd );
 
     m_coreConfigBut.addSelectionListener( new SelectionAdapter() {
@@ -330,7 +360,7 @@ public class HBaseInputDialog extends BaseStepDialog implements StepDialogInterf
     } );
     fd = new FormData();
     fd.left = new FormAttachment( middle, 0 );
-    fd.top = new FormAttachment( namedClusterWidget, margin );
+    fd.top = new FormAttachment( m_usernameText, margin );
     fd.right = new FormAttachment( m_coreConfigBut, -margin );
     m_coreConfigText.setLayoutData( fd );
 
@@ -965,6 +995,7 @@ public class HBaseInputDialog extends BaseStepDialog implements StepDialogInterf
       meta.setNamedCluster( nc );
     }
 
+    meta.setUsername( m_usernameText.getText() );
     meta.setCoreConfigURL( m_coreConfigText.getText() );
     meta.setDefaulConfigURL( m_defaultConfigText.getText() );
     meta.setSourceTableName( m_mappedTableNamesCombo.getText() );
@@ -1155,6 +1186,10 @@ public class HBaseInputDialog extends BaseStepDialog implements StepDialogInterf
 
     namedClusterWidget.setSelectedNamedCluster( m_currentMeta.getNamedCluster().getName() );
 
+    if ( !Const.isEmpty( m_currentMeta.getUsername() ) ) {
+      m_usernameText.setText( m_currentMeta.getUsername() );
+    }
+
     if ( !Const.isEmpty( m_currentMeta.getCoreConfigURL() ) ) {
       m_coreConfigText.setText( m_currentMeta.getCoreConfigURL() );
     }
@@ -1231,6 +1266,7 @@ public class HBaseInputDialog extends BaseStepDialog implements StepDialogInterf
   public HBaseConnection getHBaseConnection() throws IOException, ClusterInitializationException {
     HBaseConnection conf = null;
 
+    String username = "";
     String coreConf = "";
     String defaultConf = "";
     String zookeeperHosts = "";
@@ -1239,6 +1275,10 @@ public class HBaseInputDialog extends BaseStepDialog implements StepDialogInterf
     HBaseService hBaseService = getHBaseService();
     if ( nc != null ) {
       zookeeperHosts = transMeta.environmentSubstitute( nc.getZooKeeperHost() );
+    }
+
+    if ( !Const.isEmpty( m_usernameText.getText() ) ) {
+      username = transMeta.environmentSubstitute( m_usernameText.getText() );
     }
 
     if ( !Const.isEmpty( m_coreConfigText.getText() ) ) {
@@ -1253,7 +1293,7 @@ public class HBaseInputDialog extends BaseStepDialog implements StepDialogInterf
       throw new IOException( BaseMessages.getString( HBaseInputMeta.PKG,
           "MappingDialog.Error.Message.CantConnectNoConnectionDetailsProvided" ) );
     }
-    return hBaseService.getHBaseConnection( transMeta, coreConf, defaultConf, null );
+    return hBaseService.getHBaseConnection( transMeta, username, coreConf, defaultConf, null );
   }
 
   private void checkKeyInformation( boolean quiet, boolean readFieldsFromMapping ) {

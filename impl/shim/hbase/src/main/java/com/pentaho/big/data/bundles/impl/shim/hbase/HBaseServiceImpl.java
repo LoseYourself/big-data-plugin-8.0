@@ -84,6 +84,34 @@ public class HBaseServiceImpl implements HBaseService {
     return new HBaseConnectionImpl( this, hBaseShim, bytesUtil, connProps, logChannelInterface );
   }
 
+  @Override
+  public HBaseConnectionImpl getHBaseConnection( VariableSpace variableSpace, String username, String siteConfig, String defaultConfig,
+                                             LogChannelInterface logChannelInterface ) throws IOException {
+    Properties connProps = new Properties();
+    String zooKeeperHost = null;
+    String zooKeeperPort  = null;
+    if ( namedCluster != null ) {
+      zooKeeperHost = variableSpace.environmentSubstitute( namedCluster.getZooKeeperHost() );
+      zooKeeperPort = variableSpace.environmentSubstitute( namedCluster.getZooKeeperPort() );
+    }
+
+    connProps.setProperty( org.pentaho.hbase.shim.spi.HBaseConnection.USERNAME_KEY, !Const.isEmpty( username ) ? username : " " );
+
+    if ( !Const.isEmpty( zooKeeperHost ) ) {
+      connProps.setProperty( org.pentaho.hbase.shim.spi.HBaseConnection.ZOOKEEPER_QUORUM_KEY, zooKeeperHost );
+    }
+    if ( !Const.isEmpty( zooKeeperPort ) ) {
+      connProps.setProperty( org.pentaho.hbase.shim.spi.HBaseConnection.ZOOKEEPER_PORT_KEY, zooKeeperPort );
+    }
+    if ( !Const.isEmpty( siteConfig ) ) {
+      connProps.setProperty( org.pentaho.hbase.shim.spi.HBaseConnection.SITE_KEY, siteConfig );
+    }
+    if ( !Const.isEmpty( defaultConfig ) ) {
+      connProps.setProperty( org.pentaho.hbase.shim.spi.HBaseConnection.DEFAULTS_KEY, defaultConfig );
+    }
+    return new HBaseConnectionImpl( this, hBaseShim, bytesUtil, connProps, logChannelInterface );
+  }
+
   @Override public ColumnFilterFactoryImpl getColumnFilterFactory() {
     return new ColumnFilterFactoryImpl();
   }

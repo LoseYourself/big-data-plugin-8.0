@@ -80,6 +80,10 @@ public class HBaseOutputMeta extends BaseStepMeta implements StepMetaInterface {
 
   protected static Class<?> PKG = HBaseOutputMeta.class;
 
+  /** username to hbase */
+  @Injection( name = "HBASE_USERNAME" )
+  protected String m_username;
+
   /** path/url to hbase-site.xml */
   @Injection( name = "HBASE_SITE_XML_URL" )
   protected String m_coreConfigURL;
@@ -177,6 +181,14 @@ public class HBaseOutputMeta extends BaseStepMeta implements StepMetaInterface {
    */
   public Mapping getMapping() {
     return m_mapping;
+  }
+
+  public void setUsername( String username ) {
+    m_username = username;
+  }
+
+  public String getUsername() {
+    return m_username;
   }
 
   public void setCoreConfigURL( String coreConfig ) {
@@ -290,6 +302,9 @@ public class HBaseOutputMeta extends BaseStepMeta implements StepMetaInterface {
     namedClusterLoadSaveUtil
       .getXml( retval, namedClusterService, namedCluster, repository == null ? null : repository.getMetaStore(), getLog() );
 
+    if ( !Const.isEmpty( m_username ) ) {
+      retval.append( "\n    " ).append( XMLHandler.addTagValue( "username", m_username ) );
+    }
     if ( !Const.isEmpty( m_coreConfigURL ) ) {
       retval.append( "\n    " ).append( XMLHandler.addTagValue( "core_config_url", m_coreConfigURL ) );
     }
@@ -329,6 +344,7 @@ public class HBaseOutputMeta extends BaseStepMeta implements StepMetaInterface {
     this.namedCluster =
       namedClusterLoadSaveUtil.loadClusterConfig( namedClusterService, null, null, metaStore, stepnode, getLog() );
 
+    m_username = XMLHandler.getTagValue( stepnode, "username" );
     m_coreConfigURL = XMLHandler.getTagValue( stepnode, "core_config_url" );
     m_defaultConfigURL = XMLHandler.getTagValue( stepnode, "default_config_url" );
     m_targetTableName = XMLHandler.getTagValue( stepnode, "target_table_name" );
@@ -356,6 +372,7 @@ public class HBaseOutputMeta extends BaseStepMeta implements StepMetaInterface {
 
     this.namedCluster = namedClusterLoadSaveUtil.loadClusterConfig( namedClusterService, id_step, rep, metaStore, null, getLog() );
 
+    m_username = rep.getStepAttributeString( id_step, 0, "username" );
     m_coreConfigURL = rep.getStepAttributeString( id_step, 0, "core_config_url" );
     m_defaultConfigURL = rep.getStepAttributeString( id_step, 0, "default_config_url" );
     m_targetTableName = rep.getStepAttributeString( id_step, 0, "target_table_name" );
@@ -380,6 +397,9 @@ public class HBaseOutputMeta extends BaseStepMeta implements StepMetaInterface {
   @Override public void saveRep( Repository rep, IMetaStore metaStore, ObjectId id_transformation, ObjectId id_step ) throws KettleException {
     namedClusterLoadSaveUtil.saveRep( rep, metaStore, id_transformation, id_step, namedClusterService, namedCluster, getLog() );
 
+    if ( !Const.isEmpty( m_username ) ) {
+      rep.saveStepAttribute( id_transformation, id_step, 0, "username", m_username );
+    }
     if ( !Const.isEmpty( m_coreConfigURL ) ) {
       rep.saveStepAttribute( id_transformation, id_step, 0, "core_config_url", m_coreConfigURL );
     }
@@ -403,6 +423,7 @@ public class HBaseOutputMeta extends BaseStepMeta implements StepMetaInterface {
   }
 
   public void setDefault() {
+    m_username = null;
     m_coreConfigURL = null;
     m_defaultConfigURL = null;
     m_targetTableName = null;

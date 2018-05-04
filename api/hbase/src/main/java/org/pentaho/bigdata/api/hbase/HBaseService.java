@@ -37,6 +37,9 @@ public interface HBaseService {
   HBaseConnection getHBaseConnection( VariableSpace variableSpace, String siteConfig, String defaultConfig, LogChannelInterface logChannelInterface )
     throws IOException;
 
+  HBaseConnection getHBaseConnection( VariableSpace variableSpace, String username, String siteConfig, String defaultConfig, LogChannelInterface logChannelInterface )
+      throws IOException;
+
   ColumnFilterFactory getColumnFilterFactory();
 
   MappingFactory getMappingFactory();

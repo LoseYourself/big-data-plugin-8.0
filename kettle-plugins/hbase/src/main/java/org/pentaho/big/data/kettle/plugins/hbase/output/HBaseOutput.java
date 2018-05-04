@@ -152,7 +152,7 @@ public class HBaseOutput extends BaseStep implements StepInterface {
 
         List<String> connectionMessages = new ArrayList<String>();
         hBaseService = namedClusterServiceLocator.getService( m_meta.getNamedCluster(), HBaseService.class );
-        m_hbAdmin = hBaseService.getHBaseConnection( this, environmentSubstitute( m_meta.getCoreConfigURL() ),
+        m_hbAdmin = hBaseService.getHBaseConnection( this, environmentSubstitute( m_meta.getUsername() ), environmentSubstitute( m_meta.getCoreConfigURL() ),
                 environmentSubstitute( m_meta.getDefaultConfigURL() ), log );
         m_bytesUtil = hBaseService.getByteConversionUtil();
 
