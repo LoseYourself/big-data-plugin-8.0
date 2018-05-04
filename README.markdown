@@ -7,6 +7,13 @@ Baseline
 --------
 基线版本 : big-data-plugin-8.0.0.0-R.
 
+修改内容
+--------------
+1、添加访问HBase时, 需要用户名.
+2、修复HBase Input, HBase Output 插件，保存转换后再次打开，Hadoop Cluster显示异常问题
+3、修复Hadoop File Input 插件，保存转换后再次打开，Environment列值显示异常问题
+4、修复Hadoop File Input、Hadoop File Output 配置HDFS用户名无效问题
+
 Pentaho Big Data Plugin
 =======================
 
