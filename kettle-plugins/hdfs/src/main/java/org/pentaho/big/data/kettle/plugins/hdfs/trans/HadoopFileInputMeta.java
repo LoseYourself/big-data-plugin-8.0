@@ -133,7 +133,8 @@ public class HadoopFileInputMeta extends TextFileInputMeta {
   public String getUrlPath( String incomingURL ) {
     String path = null;
     try {
-      String noVariablesURL = incomingURL.replaceAll( "[${}]", "/" );
+      // String noVariablesURL = incomingURL.replaceAll( "[${}]", "/" );
+      String noVariablesURL = incomingURL;
       FileName fileName = KettleVFS.getInstance().getFileSystemManager().resolveURI( noVariablesURL );
       String root = fileName.getRootURI();
       path = incomingURL.substring( root.length() - 1 );

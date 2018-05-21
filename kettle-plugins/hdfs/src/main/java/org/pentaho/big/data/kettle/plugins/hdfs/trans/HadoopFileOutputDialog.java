@@ -1716,7 +1716,8 @@ public class HadoopFileOutputDialog extends BaseStepDialog implements StepDialog
   public static String getUrlPath( String incomingURL ) {
     String path = incomingURL;
     try {
-      String noVariablesURL = incomingURL.replaceAll( "[${}]", "/" );
+      // String noVariablesURL = incomingURL.replaceAll( "[${}]", "/" );
+      String noVariablesURL = incomingURL;
       FileName fileName = KettleVFS.getInstance().getFileSystemManager().resolveURI( noVariablesURL );
       String root = fileName.getRootURI();
       if ( noVariablesURL.startsWith( root ) ) {

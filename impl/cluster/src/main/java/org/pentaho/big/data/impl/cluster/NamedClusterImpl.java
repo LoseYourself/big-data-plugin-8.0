@@ -291,12 +291,14 @@ public class NamedClusterImpl implements NamedCluster, NamedClusterOsgi {
       } else if ( incomingURL.equals( "/" ) ) {
         outgoingURL = clusterURL;
       } else if ( clusterURL != null ) {
-        String noVariablesURL = incomingURL.replaceAll( "[${}]", "/" );
+        // String noVariablesURL = incomingURL.replaceAll( "[${}]", "/" );
+        String noVariablesURL = incomingURL;
 
         String fullyQualifiedIncomingURL = incomingURL;
         if ( !incomingURL.startsWith( hdfsScheme ) && !incomingURL.startsWith( NC_SCHEME ) ) {
           fullyQualifiedIncomingURL = clusterURL + incomingURL;
-          noVariablesURL = clusterURL + incomingURL.replaceAll( "[${}]", "/" );
+          // noVariablesURL = clusterURL + incomingURL.replaceAll( "[${}]", "/" );
+          noVariablesURL = clusterURL + incomingURL;
         }
 
         UrlFileNameParser parser = new UrlFileNameParser();
@@ -379,7 +381,8 @@ public class NamedClusterImpl implements NamedCluster, NamedClusterOsgi {
           if ( StringUtil.isVariable( ncUsername ) ) {
             ncUsername =
               variableSpace.getVariable( StringUtil.getVariableName( ncUsername ) ) != null ? variableSpace
-                .environmentSubstitute( ncUsername ) : null;
+                // .environmentSubstitute( ncUsername ) : null;
+                .environmentSubstitute( ncUsername ) : ncUsername;
           }
           if ( StringUtil.isVariable( ncPassword ) ) {
             ncPassword =
