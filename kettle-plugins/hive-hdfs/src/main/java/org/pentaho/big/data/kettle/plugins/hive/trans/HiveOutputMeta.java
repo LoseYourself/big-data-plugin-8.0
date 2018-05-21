@@ -81,17 +81,17 @@ public class HiveOutputMeta extends TextFileOutputMeta {
     // filename to an empty string
     setFileName( "" );
 
-    // setFileAppended(false);
-    // setSeparator(";");
-    // setEnclosure("\"");
-    // setHeaderEnabled(false);
-    // setFooterEnabled(false);
-    // setFileFormat("Unix");
-    // setFileCompression("None");
-    // setEnclosure("UTF-8");
-    // setExtension("txt");
-    // setDateInFilename(true);
-    // setTimeInFilename(true);
+    setFileAppended(false);
+    setSeparator(",");
+    setEnclosure("\"");
+    setHeaderEnabled(false);
+    setFooterEnabled(false);
+    setFileFormat("Unix");
+    setFileCompression("None");
+    setEnclosure("UTF-8");
+    setExtension("csv");
+    setDateInFilename(true);
+    setTimeInFilename(true);
 
     setConnection( "" );
     setHiveTableName( "" );
