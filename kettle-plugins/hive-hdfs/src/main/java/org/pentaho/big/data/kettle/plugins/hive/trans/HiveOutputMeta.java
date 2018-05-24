@@ -149,8 +149,9 @@ public class HiveOutputMeta extends TextFileOutputMeta {
     sourceConfigurationName = XMLHandler.getTagValue( stepnode, "file", SOURCE_CONFIGURATION_NAME );
     embeddedNamedClusterNode = XMLHandler.getSubNode( stepnode, "NamedCluster" );
 
-    hiveTableName = XMLHandler.getTagValue( stepnode, "table" );
-    hiveTableId = XMLHandler.getTagValue( stepnode, "tableId" );
+    connection = XMLHandler.getTagValue( stepnode, "file", "connection" );
+    hiveTableName = XMLHandler.getTagValue( stepnode, "file", "table" );
+    hiveTableId = XMLHandler.getTagValue( stepnode, "file", "tableId" );
 
     return getProcessedUrl( metastore, url );
   }
@@ -190,6 +191,7 @@ public class HiveOutputMeta extends TextFileOutputMeta {
     retVal.append( "      " ).append( XMLHandler.addTagValue( "name", fileName ) );
     retVal.append( "      " ).append( XMLHandler.addTagValue( SOURCE_CONFIGURATION_NAME, sourceConfigurationName ) );
 
+    retVal.append( "      " ).append( XMLHandler.addTagValue( "connection", connection ) );
     retVal.append( "      " ).append( XMLHandler.addTagValue( "table", hiveTableName ) );
     retVal.append( "      " ).append( XMLHandler.addTagValue( "tableId", hiveTableId ) );
   }
@@ -210,6 +212,7 @@ public class HiveOutputMeta extends TextFileOutputMeta {
     String url = rep.getStepAttributeString( id_step, "file_name" );
     sourceConfigurationName = rep.getStepAttributeString( id_step, SOURCE_CONFIGURATION_NAME );
 
+    connection = rep.getStepAttributeString( id_step, "connection" );
     hiveTableName = rep.getStepAttributeString( id_step, "table" );
     hiveTableId = rep.getStepAttributeString( id_step, "tableId" );
 
@@ -221,6 +224,7 @@ public class HiveOutputMeta extends TextFileOutputMeta {
     rep.saveStepAttribute( id_transformation, id_step, "file_name", fileName );
     rep.saveStepAttribute( id_transformation, id_step, SOURCE_CONFIGURATION_NAME, sourceConfigurationName );
 
+    rep.saveStepAttribute( id_transformation, id_step, "connection", connection );
     rep.saveStepAttribute( id_transformation, id_step, "table", hiveTableName );
     rep.saveStepAttribute( id_transformation, id_step, "tableId", hiveTableId );
   }
